@@ -1,3 +1,5 @@
+Questions and Answers
+
 What is the mocha dependancy used for in the test project?
 As a test framework, mocha is used for defining and executing the test suits.
 Mocha is a JS test framework, so it provides the syntax for writing and running the tests.
@@ -22,3 +24,35 @@ Using the select object from Selenium offeres you access to a variety of handy c
 
 When would you prefer to create a Selenium test instead of an API test for an application?
 When addressing a risk that requires use of the browser, and UI elements. API tests cannot address some risks that are browser-use specific, or that involves use of UI elements.
+
+What is a downside of having multiple assertions in a test, as opposed to splitting the code in multiple tests, each with an assertion?
+
+if the test fails, it can be unclear where the exact issue is, since any or more of the conditions in the assertions could be unfulfilled. Testing one single thing in a test is a good focusing strategy, allowing you to keep the tests clear and small.
+
+If you are reusing an element located previously on the page, in which situation would you expect to get a StaleElementReferenceError?
+
+When the DOM of the page has changed.
+The parts of the DOM that change or are regenerated will result in new web elements, even if they look the same in the UI.
+
+Why is it a bad idea to include assertions in the Page Object?
+because assertions are related to what a test checks, so they are best placed inside tests, in order to easily track failures.  It is generally not a good idea to abstract assertions from the test code into the Page Object, as it makes it less clear why a failure occurs, and what tests actually check.
+
+What does the Page Object typically contain?
+methods needed to interact with the UI of a page. UI interactions are typically extracted in the Page Object.
+
+Why is it preferable to move outside of the test the teardown steps that ensure a clean application state, in an “afterEach” block?
+It ensures that the teardown steps run even if the test run fails, and thus keeps tests from interfering with each other.  teardown steps are guaranteed to run if they are in an "afterEach" block, so application state does not leak from one test to the other. This reduces the likeliness of flaky tests(tests that sometimes pass and sometimes fail).
+
+When would you want to move your setup code in a “beforeEach” block instead of leaving it inside the test?
+when the same setup operations apply to all the tests in the suite
+The beforeEach block is executed before each test in the suite, so setup code that applies to all tests is guaranteed to be executed before each test is run.
+
+Why is it useful to simulate a slow internet connection in your Selenium tests?
+
+so that the tests can check if the application behavior is correct in realistic cases that involve a slow internet connection. Some app behavior is revealed only when the app is used with a slow internet connection.
+
+Which Explicit Wait function could you use to perform an action in a test only after the page is reloaded (You can check the function definitions on https://www.selenium.dev/selenium/docs/api/javascript/module/selenium-webdriver/lib/until.html)?
+stalenessOf(element )
+
+If the page is reloaded, all elements previously located on it will become stale. So you can wait for the reload to be applied by checking if an element previously located is now stale.
+
